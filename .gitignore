@@ -1,0 +1,10 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+# 3rd party modules for node.js
+node_modules/
+
+# VS Code Workspace settings
+.vscode/
+
+# Google API Key
+googleapi.js
