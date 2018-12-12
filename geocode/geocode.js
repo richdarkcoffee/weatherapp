@@ -1,7 +1,7 @@
 const request = require('request');
 const googleapi = require('../googleapi');
 
-function geocodeAddress(address) {
+function geocodeAddress(address, callback) {
     var useraddress = encodeURIComponent(address);
     var apikey = googleapi.googleapikey();
 
@@ -11,16 +11,18 @@ function geocodeAddress(address) {
     }, (error, response, body) => {
         if (error) {
             // Catching errors message in connecting to services
-            console.log('Unable to connect to servers.');
+            callback('Unable to connect to servers.', undefined);
         } else if (body.status === "ZERO_RESULTS") {
             // Catching errors messages from Google
-            console.log('Unable to find this address.');
+            callback('Unable to find this address.', undefined);
         } else if (body.status === "OK") {
-            console.log(`Address: ${body.results[0].formatted_address}`);
-            console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
-            console.log(`Longitude: ${body.results[0].geometry.location.lng}`);    
+            callback(undefined, {
+                address: body.results[0].formatted_address,
+                latitude: body.results[0].geometry.location.lat,
+                longitude: body.results[0].geometry.location.lng
+            });
         }
-    })    
+    });
 }
 
 module.exports.geocodeAddress = geocodeAddress;

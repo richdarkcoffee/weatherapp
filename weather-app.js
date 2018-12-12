@@ -14,8 +14,11 @@ const argv = yargs
     .alias('help', 'h')
     .argv;
 
+// Added error handling by passing function to geocodeAddress
 geocode.geocodeAddress(argv.address, (errorMessage, result) => {
     if (errorMessage) {
         console.log(errorMessage);
+    } else {
+        console.log(JSON.stringify(result, undefined, 2));
     }
 });
